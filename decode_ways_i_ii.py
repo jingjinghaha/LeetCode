@@ -62,6 +62,32 @@ class Solution(object):
             else:
                 dp[i] = dp[i-1]
         return dp[-1]
+# more tricky
+class Solution(object):
+    def numDecodings(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        if not s:
+            return 0
+        n = len(s)
+        dp = [0] * (n + 1)
+        dp[n] = 1
+        for i in range(n):
+            if s[i] != '0':
+                dp[i] = 1
+            else:
+                dp[i] = 0
+        for i in range(n - 2, -1, -1):
+            if dp[i] == 0:
+                continue
+            else:
+                if s[i:i+2] <= '26':
+                    dp[i] = dp[i+1] + dp[i+2]
+                else:
+                    dp[i] = dp[i+1]
+        return dp[0]
 
 
 '''

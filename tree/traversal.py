@@ -219,6 +219,7 @@ return its level order traversal as:
   [15,7]
 ]
 '''
+# BFS
 class Solution(object):
     def levelOrder(self, root):
         """
@@ -262,6 +263,7 @@ return its zigzag level order traversal as:
   [15,7]
 ]
 '''
+# BFS
 class Solution(object):
     def zigzagLevelOrder(self, root):
         """
@@ -354,4 +356,35 @@ return its vertical order traversal as:
   [7]
 ]
 '''
+# BFS
+class Solution(object):
+    def verticalOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        if not root:
+            return []
+        offsets = {}
+        from collections import deque
+        q = deque()
+        offset = 0
+        q.append([offset, root])
+        while len(q):
+            size = len(q)
+            for i in range(size):
+                node = q.popleft()
+                if node[0] not in offsets:
+                    offsets[node[0]] = [node[1].val]
+                else:
+                    offsets[node[0]].append(node[1].val)
+                if node[1].left:
+                    q.append([node[0] - 1, node[1].left])
+                if node[1].right:
+                    q.append([node[0] + 1, node[1].right])
+        sorted_offsets = sorted(offsets.iteritems(), key=lambda x:x[0])
+        results = []
+        for ele in sorted_offsets:
+            results.append(ele[1])
+        return results
 
