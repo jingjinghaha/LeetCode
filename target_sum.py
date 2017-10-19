@@ -39,4 +39,28 @@ class Solution(object):
         self.helper(nums, target - nums[start], start + 1)
         self.helper(nums, target + nums[start], start + 1)
 
+# memorized DFS, accepted
+class Solution(object):
+    def findTargetSumWays(self, nums, S):
+        """
+        :type nums: List[int]
+        :type S: int
+        :rtype: int
+        """
+        if not nums:
+            return 0
+        return self.helper(nums, S, 0, 0, {})
+    def helper(self, nums, target, idx, tmp, mapping):
+        key = str(idx) + "->" + str(tmp)
+        if key in mapping:
+            return mapping[key]
+        if idx == len(nums):
+            if tmp == target:
+                return 1
+            return 0
+        cnt1 = self.helper(nums, target, idx + 1, tmp - nums[idx], mapping)
+        cnt2 = self.helper(nums, target, idx + 1, tmp + nums[idx], mapping)
+        mapping[key] = cnt1 + cnt2
+        return mapping[key]
+
 
