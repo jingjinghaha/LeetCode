@@ -74,3 +74,27 @@ class Solution(object):
                 results.append(nums[q[0]])
             
         return results
+
+
+# rewrite
+class Solution(object):
+    def maxSlidingWindow(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        from collections import deque
+        if not nums or not k:
+            return []
+        q = deque()
+        results = []
+        for i in range(0, len(nums)):
+            if len(q) and q[0] <= i - k:
+                q.popleft()
+            while len(q) and nums[q[-1]] < nums[i]:
+                q.pop()
+            q.append(i)
+            if i >= k - 1:
+                results.append(nums[q[0]])
+        return results
