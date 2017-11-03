@@ -54,7 +54,10 @@ class Solution(object):
                 nums[i] = tmp
                 r -= 1
 
-# more tricky, pay attention that swap 2 before swap 0
+# pay much attention to "<="
+# judge 2 should come before judge 0
+# the trick is that when the number is 2, after it is swaped, it can be 0,1,2
+# but when the number is 0, after it is swaped, it can only be 0 or 1
 class Solution(object):
     def sortColors(self, nums):
         """

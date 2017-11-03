@@ -80,4 +80,49 @@ class NumMatrix(object):
             sum = self.presum[row2][col2] - self.presum[row1-1][col2] - self.presum[row2][col1-1] + self.presum[row1-1][col1-1]
         return sum
 
+# O(n)
+class NumMatrix(object):
 
+    def __init__(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        """
+        for row in matrix:
+            for i in range(1, len(row)):
+                row[i] += row[i-1]
+        self.matrix = matrix
+        
+    def update(self, row, col, val):
+        """
+        :type row: int
+        :type col: int
+        :type val: int
+        :rtype: void
+        """
+        orig = self.matrix[row][col]
+        if col != 0:
+            orig -= self.matrix[row][col - 1]
+        diff = val - orig
+        for i in range(col, len(self.matrix[0])):
+            self.matrix[row][i] += diff
+
+    def sumRegion(self, row1, col1, row2, col2):
+        """
+        :type row1: int
+        :type col1: int
+        :type row2: int
+        :type col2: int
+        :rtype: int
+        """
+        sum = 0
+        for i in range(row1, row2 + 1):
+            sum += self.matrix[i][col2]
+            if col1 != 0:
+                sum -= self.matrix[i][col1 -1]
+        return sum
+
+
+# Your NumMatrix object will be instantiated and called as such:
+# obj = NumMatrix(matrix)
+# obj.update(row,col,val)
+# param_2 = obj.sumRegion(row1,col1,row2,col2) 
