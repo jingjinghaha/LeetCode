@@ -56,3 +56,38 @@ class Solution(object):
                     count += 1
         return count
 
+# dfs
+class Solution(object):
+    def numIslands(self, grid):
+        """
+        :type grid: List[List[str]]
+        :rtype: int
+        """
+        if not grid:
+            return 0
+        visited = set()
+        m = len(grid)
+        n = len(grid[0])
+        cnt = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == '1':
+                    self.helper(grid, i, j)
+                    cnt += 1
+        return cnt
+    
+    def helper(self, grid, x, y):
+        grid[x][y] = '0'
+        deltaX = [0, 0, -1, 1]
+        deltaY = [-1, 1, 0, 0]
+        for i in range(4):
+            new_x = x + deltaX[i]
+            new_y = y + deltaY[i]
+            if self.check(new_x, new_y, len(grid), len(grid[0])) and grid[new_x][new_y] == '1':
+                self.helper(grid, new_x, new_y)
+    
+    def check(self, x, y, m, n):
+        return x >= 0 and x < m and y >= 0 and y < n
+
+
+
